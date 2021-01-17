@@ -38,7 +38,11 @@ public class FileSplitter {
                     resultFilesCounter++;
                     outputFileName = createNewOutputFile(outputFileNameTemplate, resultFilesCounter);
                     outputFile = new File(outputFileName);
-                    writer = new BufferedWriter(new FileWriter(outputFileName, false));
+                    writer = new BufferedWriter(
+                            new OutputStreamWriter(
+                                    new FileOutputStream(outputFileName, false), StandardCharsets.UTF_8
+                            )
+                    );
                 }
             }
             writer.close();

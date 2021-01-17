@@ -35,11 +35,11 @@ public class RegexFinder {
             }
             writer = new BufferedWriter(new FileWriter(outputFileName, false));
 
-            for (int i = 0; i < inputFiles.size(); i++) {
-                reader = new BufferedReader(new FileReader(inputFiles.get(i)));
+            for (String inputFile : inputFiles) {
+                reader = new BufferedReader(new FileReader(inputFile));
                 while ((line = reader.readLine()) != null) {
                     regexMatcher = regexPattern.matcher(line);
-                    if (regexMatcher.find()) {
+                    while (regexMatcher.find()) {
                         writer.append(regexMatcher.group()).append(String.valueOf(LINE_ENDING));
                     }
                 }
