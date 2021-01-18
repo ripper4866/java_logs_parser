@@ -3,6 +3,7 @@ package perf.ermolaevnk;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,12 +15,12 @@ public class RegexFinder {
         Matcher regexMatcher;
 
         int argNum = 1;
-        List<String> inputFiles = new ArrayList<String>();
+        List<String> inputFiles = new ArrayList<>();
         while (argNum < args.length - 1) {
             inputFiles.add(args[argNum]);
             argNum++;
         }
-        String outputFileName = args[args.length - 1], line = null;
+        String outputFileName = args[args.length - 1], line;
 
         File outputFile;
         BufferedWriter writer;
@@ -30,8 +31,16 @@ public class RegexFinder {
             if (outputFile.createNewFile()) {
                 System.out.println(outputFileName + " created");
             } else {
-                System.out.println("File " + outputFileName + " already exists and will be overwritten");
-//                System.out.println("Overwrite file? (y/n)");
+                System.out.println("File " + outputFileName + " already exists"
+                        + "Please allow program to overwrite it, otherwise program will stop execution"
+                        + "You can backup this file before proceeding"
+                        + "Allow overwriting existing files? (y/n)");
+                Scanner console_input = new Scanner(System.in);
+                String answer = console_input.next();
+                if (!answer.equalsIgnoreCase("Y")) {
+                    System.out.println("Program execution terminated by user");
+                    return;
+                }
             }
             writer = new BufferedWriter(new FileWriter(outputFileName, false));
 
