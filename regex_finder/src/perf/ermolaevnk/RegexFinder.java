@@ -11,6 +11,15 @@ public class RegexFinder {
     public static char LINE_ENDING = '\n';
 
     public static void main(String[] args) throws IOException {
+        if (args.length < 3) {
+            System.out.println("Too few arguments\n"
+                    + "Expecting 3 or more arguments:\n"
+                    + "First argument is the regular expression\n"
+                    + "Following arguments are input files paths\n"
+                    + "Last argument is output file path");
+            return;
+        }
+
         Pattern regexPattern = Pattern.compile(args[0]);
         Matcher regexMatcher;
 
@@ -31,9 +40,9 @@ public class RegexFinder {
             if (outputFile.createNewFile()) {
                 System.out.println(outputFileName + " created");
             } else {
-                System.out.println("File " + outputFileName + " already exists"
-                        + "Please allow program to overwrite it, otherwise program will stop execution"
-                        + "You can backup this file before proceeding"
+                System.out.println("File " + outputFileName + " already exists\n"
+                        + "Please allow program to overwrite it, otherwise program will stop execution\n"
+                        + "You can backup this file before proceeding\n"
                         + "Allow overwriting existing files? (y/n)");
                 Scanner console_input = new Scanner(System.in);
                 String answer = console_input.next();

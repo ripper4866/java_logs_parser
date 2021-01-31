@@ -9,6 +9,14 @@ public class FileSplitter {
     public static boolean overwritingFilesPermission = false;
 
     public static void main(String[] args) {
+        if (args.length != 2) {
+            System.out.println("Too few or too many arguments\n"
+                    + "Expecting exactly 2 arguments:\n"
+                    + "First argument is the input file path\n"
+                    + "Second argument is the output file name template");
+            return;
+        }
+
         int resultFilesCount = 10, resultFilesCounter = 1;
         long resultFileMaxSize;
         String inputFileName = args[0],
@@ -76,6 +84,7 @@ public class FileSplitter {
                     + "Allow overwriting existing files? (y/n)");
             String answer = console_input.next();
             if (answer.equalsIgnoreCase("Y")) {
+                System.out.println(outputFileName + " created");
                 overwritingFilesPermission = true;
             } else {
                 return "Program execution terminated by user";
