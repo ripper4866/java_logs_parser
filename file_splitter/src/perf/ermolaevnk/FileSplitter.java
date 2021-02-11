@@ -73,7 +73,7 @@ public class FileSplitter {
 
     private static String createNewOutputFile(String FileNameTemplate, int resultFilesCounter) throws IOException {
         Scanner console_input = new Scanner(System.in);
-        String outputFileName = FileNameTemplate + resultFilesCounter;
+        String outputFileName = FileNameTemplate + resultFilesCounter + ".log";
         File outputFile = new File(outputFileName);
         if (outputFile.createNewFile() || overwritingFilesPermission) {
             System.out.println(outputFileName + " created");

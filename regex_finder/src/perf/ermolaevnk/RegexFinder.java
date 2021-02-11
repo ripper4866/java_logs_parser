@@ -1,8 +1,6 @@
 package perf.ermolaevnk;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,25 +9,21 @@ public class RegexFinder {
     public static char LINE_ENDING = '\n';
 
     public static void main(String[] args) throws IOException {
-        if (args.length < 3) {
+        if (args.length != 3) {
             System.out.println("Too few arguments\n"
                     + "Expecting 3 or more arguments:\n"
                     + "First argument is the regular expression\n"
-                    + "Following arguments are input files paths\n"
-                    + "Last argument is output file path");
+                    + "Second argument is input files path\n"
+                    + "Third argument is output file path");
             return;
         }
 
         Pattern regexPattern = Pattern.compile(args[0]);
         Matcher regexMatcher;
 
-        int argNum = 1;
-        List<String> inputFiles = new ArrayList<>();
-        while (argNum < args.length - 1) {
-            inputFiles.add(args[argNum]);
-            argNum++;
-        }
-        String outputFileName = args[args.length - 1], line;
+        File inputFilesPath = new File(args[1]);
+        File[] inputFiles = inputFilesPath.listFiles();
+        String outputFileName = args[2] + ".log", line;
 
         File outputFile;
         BufferedWriter writer;
@@ -53,8 +47,10 @@ public class RegexFinder {
             }
             writer = new BufferedWriter(new FileWriter(outputFileName, false));
 
-            for (String inputFile : inputFiles) {
-                reader = new BufferedReader(new FileReader(inputFile));
+            assert inputFiles != null;
+            for (File inputFile : inputFiles) {
+                System.out.println("Reading " + inputFile.getAbsolutePath());
+                reader = new BufferedReader(new FileReader(inputFile.getAbsolutePath()));
                 while ((line = reader.readLine()) != null) {
                     regexMatcher = regexPattern.matcher(line);
                     while (regexMatcher.find()) {
